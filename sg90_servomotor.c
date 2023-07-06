@@ -47,9 +47,10 @@ void set_motor(PWM_Handle handle, int percentage);
 PWM_Handle* init_motor(int CONFIG_DEFINITION);
 void init_fingers();
 void move_joint(int finger, int joint, int percent);
+void cycle_finger(int finger);
 
 // Declare 2D array
-PWM_Handle fingers[5][2];
+PWM_Handle fingers[6][2];
 
 /*
  *  ======== mainThread ========
@@ -64,14 +65,39 @@ void *mainThread(void *arg0)
 
     while(1){
 
-        move_joint(0, 0, 25);
-        sleep(1);
-        move_joint(0, 0, 99);
-        sleep(1);
+//        move_joint(0, 0, 25);
+//        sleep(1);
+//        move_joint(0, 0, 99);
+//        sleep(1);
+
+//        cycle_finger(2);
+
+        move_joint(5, 0, 25);
+        sleep(2);
+        move_joint(5, 0, 90);
+        sleep(2);
+//        move_joint(2, 0, 25);
+//        sleep(2);
+//        move_joint(3, 0, 25);
+//        sleep(2);
+//        move_joint(4, 0, 25);
+//        sleep(2);
+//        move_joint(5, 0, 25);
+//        sleep(2);
 
     }
 
 }
+
+void cycle_finger(int finger){
+    move_joint(finger, 0, 25);
+    sleep(1);
+    move_joint(finger, 0, 80);
+    sleep(1);
+//    move_joint(finger, 0, 25);
+//    sleep(1);
+}
+
 
 void move_joint(int finger, int joint, int percent){
     set_motor(fingers[finger][joint], percent);
@@ -80,10 +106,15 @@ void move_joint(int finger, int joint, int percent){
 void init_fingers(){
 
     // Create the first finger
-    PWM_Handle pwmHandle1_1 = *(init_motor(CONFIG_PWM_1_1));
-    PWM_Handle pwmHandle1_2 = *(init_motor(CONFIG_PWM_1_2));
-    fingers[0][0] = pwmHandle1_1;
-    fingers[0][1] = pwmHandle1_2;
+    PWM_Handle finger1Handle = *(init_motor(FINGER_1));
+    PWM_Handle finger2Handle = *(init_motor(FINGER_2));
+    PWM_Handle finger34Handle = *(init_motor(FINGER_3_4));
+    PWM_Handle finger5Handle = *(init_motor(FINGER_5));
+    fingers[1][0] = finger1Handle;
+    fingers[2][0] = finger2Handle;
+    fingers[3][0] = finger34Handle;
+    fingers[4][0] = finger34Handle;
+    fingers[5][0] = finger5Handle;
 
 }
 
