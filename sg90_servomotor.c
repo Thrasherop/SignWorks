@@ -64,7 +64,7 @@ void *mainThread(void *arg0)
 
     while(1){
 
-        move_joint(0, 0, 1);
+        move_joint(0, 0, 25);
         sleep(1);
         move_joint(0, 0, 99);
         sleep(1);
@@ -90,7 +90,7 @@ void init_fingers(){
 void set_motor(PWM_Handle handle, int percentage){
 
     int max = 2400;
-    int thisDutyCycle = (percentage * max) / 100;
+    int thisDutyCycle = ((percentage * max) )/ 100;
 
     PWM_setDuty(handle, thisDutyCycle);
 
